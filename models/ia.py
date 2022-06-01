@@ -18,10 +18,16 @@ def get_model( path:str ):
 
 def get_X_y(df, corpus_name:str, model ):
     tokens= sentiments.get_tokens( df, corpus_name )
+    tokens= sentiments.remove_sw( tokens )
+    print( "tokens: ", tokens )
+    #df['mean']= sentiments.get_mean_vectors( tokens, model )
     vectors= sentiments.get_vectors( tokens, model )
-    mean= sentiments.get_mean( vectors )
+    print("vectors: ",vectors)
+    df[ 'mean' ]= sentiments.get_mean( vectors )
+    print("df")
+    print( df.head())
 
-    return mean, df[ 'target' ].to_list()
+    return df['mean'].to_list(), df[ 'target' ].to_list()
 
 def get_split( X,y,test_size:float=0.33 ):
     return train_test_split( X, y, test_size=test_size)

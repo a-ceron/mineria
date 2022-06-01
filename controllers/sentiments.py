@@ -16,7 +16,7 @@ import logging
 logging.basicConfig(format='%(asctime)s : %(message)s', level=logging.INFO)
 
 def get_emdeddings_model( path:str ):
-    KeyedVectors.load_word2vec_format( path )
+    return KeyedVectors.load_word2vec_format( path )
 
 def get_tokens( df, column:str, nltk:bool=True ):
     if nltk:
@@ -28,32 +28,39 @@ def __aux_token( string ):
         return word_tokenize( string )
     except Exception as e:
         print( e )
-        print( string )
         return string.split()
 
-def remove_sw( df, column ):
-    return df[ column ].apply( lambda x: [ w for w in x if w not in __dowload_sw() ] )
+def remove_sw( series ):
+    sw= __dowload_sw()
+    s= series.apply( lambda x: [ w for w in x if w not in sw ] )
+    return s.apply( lambda x: [ w.replace(',','') for w in x ] )
+    
 
 def get_vectors( tokens, model ):
   return tokens.apply( lambda x: words_to_vect( x, model ) )
 
 def get_mean( vectors ):
-    return vectors.apply( words_to_mean ).to_list()
+    return vectors.apply( words_to_mean )
+
+def get_mean_vectors( series, model ):
+    return series.apply( model.get_mean_vector  )
+    
 
 def words_to_vect( words, model )->list:
   vect= []
   for word in words:
     aux= word_to_vect( word, model )
-    if( aux != '' ):
+    if( aux  ):
       vect.append( aux )
 
   return vect
 
 def word_to_vect( word, model )->list:
   try:
-    return model.wv[ word ] 
-  except:
-    return ''
+    return model.get_vector( word )
+  except Exception as e:
+    print( e )
+    return []
 
 def s( v1, v2):
   if v2 == []: 
