@@ -23,11 +23,10 @@ def get_X_y(df, corpus_name:str, model ):
 
     return mean, df[ 'target' ].to_list()
 
-def get_split( X,y,test_size:float=0.2 ):
+def get_split( X,y,test_size:float=0.33 ):
     return train_test_split( X, y, test_size=test_size)
 
 def apply_logistic( X_train, y_train, X_test, y_test ):
-    #model= LogisticRegression( solver='lbfgs', multi_class='auto' )
     model= LogisticRegression( solver='lbfgs'  )
     model.fit( X_train, y_train )
     y_pred= model.predict( X_test )

@@ -35,6 +35,7 @@ def model( df ):
     # Generate split data
     X,y= ia.get_X_y( df, 'lyrics', model)
     X_train, y_train, X_test, y_test= ia.get_split( X, y )
+    print(X_train, y_train, X_test, y_test)
 
     #Apply logistic
     print("Aplicando modelo logistico")
@@ -74,6 +75,9 @@ def read_data( ):
     
 
 def main():
+    # Generando corpus
+    # generate_corpus(  )
+    
     # #Process corpus
     # print( "Procesando corpus" )
     # process_corpus('data/corridos inmigrantes')
