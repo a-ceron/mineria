@@ -18,14 +18,9 @@ def get_model( path:str ):
 
 def get_X_y(df, corpus_name:str, model ):
     tokens= sentiments.get_tokens( df, corpus_name )
-    tokens= sentiments.remove_sw( tokens )
-    print( "tokens: ", tokens )
-    #df['mean']= sentiments.get_mean_vectors( tokens, model )
+    tokens= sentiments.remove( tokens )
     vectors= sentiments.get_vectors( tokens, model )
-    print("vectors: ",vectors)
     df[ 'mean' ]= sentiments.get_mean( vectors )
-    print("df")
-    print( df.head())
 
     return df['mean'].to_list(), df[ 'target' ].to_list()
 

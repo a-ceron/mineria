@@ -31,12 +31,10 @@ def process_corpus( topic:str ):
 def model( df ):
     # Generate model
     model= ia.get_model( 'data/fasttext-sbwc.vec' )
-    print(type(model))
-    print(dir(model))
 
     # Generate split data
-    X,y= ia.get_X_y( df, 'lyrics', model)
-    X_train, y_train, X_test, y_test= ia.get_split( X, y )
+    X, y= ia.get_X_y( df, 'lyrics', model)
+    X_train, X_test, y_train, y_test= ia.get_split( X, y )
 
     #Apply logistic
     print("Aplicando modelo logistico")
@@ -49,8 +47,8 @@ def model( df ):
     
 
 def read_data( ):
-    df1= read_csv( 'data/corridos inmigrantes.csv' )[:5]
-    df2= read_csv( 'data/corridos inmigrantes.csv' )[:5]
+    df1= read_csv( 'data/corridos inmigrantes.csv' )
+    df2= read_csv( 'data/corridos inmigrantes.csv' )
     #df2= read_csv( 'data/corridos belicos.csv' )
 
     # Remueve canciones duplicadas

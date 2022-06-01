@@ -30,9 +30,10 @@ def __aux_token( string ):
         print( e )
         return string.split()
 
-def remove_sw( series ):
+def remove( series ):
     sw= __dowload_sw()
     s= series.apply( lambda x: [ w for w in x if w not in sw ] )
+    s= s.apply( lambda x: [ w for w in x if w ] )
     return s.apply( lambda x: [ w.replace(',','') for w in x ] )
     
 
@@ -50,7 +51,7 @@ def words_to_vect( words, model )->list:
   vect= []
   for word in words:
     aux= word_to_vect( word, model )
-    if( aux  ):
+    if( aux != [] ):
       vect.append( aux )
 
   return vect
